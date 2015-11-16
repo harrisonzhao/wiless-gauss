@@ -1,11 +1,9 @@
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
-// https://github.com/maniacbug/RF24
+// https://github.com/gcopeland/rf24
 
 RF24 radio(7, 8);
-
-const byte rxAddr[6] = "00001";
 
 void setup()
 {
@@ -13,7 +11,7 @@ void setup()
   Serial.begin(9600);
   
   radio.begin();
-  radio.openReadingPipe(0, rxAddr);
+  radio.openReadingPipe(0, 00001);
   
   radio.startListening();
 }
