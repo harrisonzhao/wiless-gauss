@@ -1,0 +1,17 @@
+.gradle
+build/
+classes/
+gradle.properties
+
+*.orig
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+## Directory-based project format
+.idea/
+
+## File-based project format
+*.ipr
+*.iws
+*.iml
