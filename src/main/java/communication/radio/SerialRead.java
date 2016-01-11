@@ -10,29 +10,37 @@ public class SerialRead {
     private SerialPort serialPort;
 
     public void openAndSetSerialPort(String port){
-        serialPort = new SerialPort("/dev/ttyACM0");
+        serialPort = new SerialPort(port);
         try {
             System.out.println("Port opened: " + serialPort.openPort());
-            System.out.println("Params setted: " + serialPort.setParams(9600,64, 1, 0));
+            System.out.println("Params setted: " + serialPort.setParams(9600, 64, 1, 0));
         }
         catch (SerialPortException e){
             e.printStackTrace();
         }
     }
 
-    public String [] readFromSerialPort(){
+    public String [] readFromSerialPortGyro(){
         byte[] data = new byte[0];
+        String parsedData=null;
         try {
             data = serialPort.readBytes(64);
         } catch (SerialPortException e) {
             e.printStackTrace();
         }
         String output = new String(data, StandardCharsets.UTF_8);
-        String [] vals = output.split(" ");
-        vals[0] = vals[0].substring(findIndexOfFirstInt(vals[0]));
-        vals[vals.length-1] = vals[vals.length-1].substring(0,findIndexOfLastInt(vals[vals.length-1])+1);
+        int start = output.indexOf("s");
+        int finish = output.indexOf("f");
+        if(start<finish){
+            parsedData = output.substring(start,finish);
+        }
+        else{
+            parsedData = output.substring(start) + output.substring(0, finish);
+        }
+        parsedData = parsedData.substring(1);
+        //System.out.println("parsed: "+parsedData);
+        String [] vals = parsedData.split(" ");
         return vals;
-
     }
 
     private static int findIndexOfLastInt(String s) {
@@ -51,5 +59,15 @@ public class SerialRead {
             }
         }
         return 0;
+    }
+
+    public void restart() {
+        try {
+            serialPort.closePort();
+            serialPort.openPort();
+            serialPort.setParams(9600,64, 1, 0);
+        } catch (SerialPortException e) {
+            e.printStackTrace();
+        }
     }
 }

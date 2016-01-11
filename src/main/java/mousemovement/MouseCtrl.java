@@ -39,14 +39,33 @@ public class MouseCtrl {
         robot.mouseMove(x,y);
     }
 
+    //0 degrees is directly up, positive angle to the left and negative to the right, up until +-90 degrees
+    //velocity could be negative
+    public void moveAtAngleWithVel(double vel1, double vel2, double angle){
+
+
+        System.out.println("old: "+x+" "+y);
+        y = (int)((double)y - (5*Math.cos(angle*3.14/180)));
+        x = (int)((double)x + (5*Math.sin(angle*3.14/180)));
+        System.out.println("new: "+x+" "+y);
+        robot.mouseMove(x,y);
+    }
+
+    public void moveAtAngle(double angle){
+        System.out.println("old: "+x+" "+y);
+        y = (int)((double)y - (5*Math.cos(angle*3.14/180)));
+        x = (int)((double)x + (5*Math.sin(angle*3.14/180)));
+        System.out.println("new: "+x+" "+y);
+        robot.mouseMove(x,y);
+    }
     public void rightClick(){
-        robot.mousePress(InputEvent.BUTTON1_MASK);
-        robot.mouseRelease(InputEvent.BUTTON1_MASK);
+        robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
+        robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
     }
 
     public void leftClick(){
-        robot.mousePress(InputEvent.BUTTON2_MASK);
-        robot.mouseRelease(InputEvent.BUTTON2_MASK);
+        robot.mousePress(InputEvent.BUTTON2_DOWN_MASK);
+        robot.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);
     }
 
 }
