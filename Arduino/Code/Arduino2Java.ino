@@ -52,7 +52,7 @@ void setup() {
     #endif
 
     Serial.begin(9600);
-
+    Serial1.begin(9600); //If connected Bluetooth module properly to Arduino Micro
 //    Serial.println(F("Initializing I2C devices..."));
     mpu.initialize();
 
@@ -161,7 +161,8 @@ void loop() {
 //        Serial.println(ypr[2] * 180/M_PI);
 //         sprintf(out," X=%d Y=%d Z=%d \t t=%d f=%d \n",sv1, sv2, sv3, fp1, fp2);
         sprintf(out,"s%s %s %s %d %d %df",floatBuffer1,floatBuffer2,floatBuffer3,sv1,sv2,sv3);
-        Serial.write(out,64);
+        Serial.print(out);
+        Serial1.write(out,64);
     }
     delay(100);
 }
