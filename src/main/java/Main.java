@@ -1,7 +1,6 @@
-import communication.radio.SerialRead;
+import communication.SerialRead;
 import mousemovement.MouseCtrl;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Main {
@@ -12,7 +11,9 @@ public class Main {
         mouseCtrl.setInitialPos(900, 1000);
 
         SerialRead serialRead = new SerialRead();
-        serialRead.openAndSetSerialPort("/dev/ttyACM0");
+//        serialRead.openAndSetSerialPort("/dev/ttyACM0");
+        serialRead.openAndSetSerialPort("/dev/rfcomm0");
+
 
         int f1,f2,f3,leftCount=0,rightCount=0;
         double x,y,z;

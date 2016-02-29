@@ -1,4 +1,4 @@
-package communication.radio;
+package communication;
 
 import jssc.SerialPort;
 import jssc.SerialPortException;
@@ -13,7 +13,7 @@ public class SerialRead {
         serialPort = new SerialPort(port);
         try {
             System.out.println("Port opened: " + serialPort.openPort());
-            System.out.println("Params setted: " + serialPort.setParams(9600, 64, 1, 0));
+            System.out.println("Params setted: " + serialPort.setParams(230400, 64, 1, 0));
         }
         catch (SerialPortException e){
             e.printStackTrace();
