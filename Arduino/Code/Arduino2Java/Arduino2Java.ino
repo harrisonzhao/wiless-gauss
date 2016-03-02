@@ -51,8 +51,15 @@ void setup() {
         Fastwire::setup(400, true);
     #endif
 
-    Serial.begin(9600);
-    Serial1.begin(9600); //If connected Bluetooth module properly to Arduino Micro
+    Serial.begin(230400);
+    Serial1.begin(230400); //If connected Bluetooth module properly to Arduino Micro
+    
+    //Set internal pull up resistor
+    // pinMode(ap1, INPUT_PULLUP);
+    // pinMode(ap2, INPUT_PULLUP);
+    // pinMode(ap3, INPUT_PULLUP);
+    
+    
 //    Serial.println(F("Initializing I2C devices..."));
     mpu.initialize();
 
