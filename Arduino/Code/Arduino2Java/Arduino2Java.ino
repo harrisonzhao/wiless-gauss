@@ -38,6 +38,8 @@ void dmpDataReady() {
     mpuInterrupt = true;
 }
 
+int16_t ax, ay, az, gx, gy, gz;
+
 int sv1 = 0;          
 int sv2 = 0;  
 int sv3 = 0;
@@ -103,7 +105,12 @@ void setup() {
 }
 
 void loop() {
-  
+
+    mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+    int vx = map(ax, -16000, 16000, 90, -90);
+    int vy = map(ay, -16000, 16000, 90, -90);
+
+
     sv1 = analogRead(ap1);           
     delay(2);                    
    
@@ -114,32 +121,20 @@ void loop() {
     delay(2);
    
     if (!dmpReady) {
-    //  Serial.println("returning");
       return;
     }
     
     mpuInterrupt = false;
-//    Serial.println("gettingIntSTatus");
     mpuIntStatus = mpu.getIntStatus();
-//    Serial.println("gotIntStatus");
-
-    
-    // get current FIFO count
-//    Serial.println("gettingFifoCount");
     fifoCount = mpu.getFIFOCount();
 
-    // check for overflow (this should never happen unless our code is too inefficient)
     if ((mpuIntStatus & 0x10) || fifoCount == 1024) {
-//        Serial.println("ResettingFifo");
         mpu.resetFIFO();
-
-    // otherwise, check for DMP data ready interrupt (this should happen frequently)
-    } else if (mpuIntStatus & 0x02) {
+    }
+    else if (mpuIntStatus & 0x02) {
         while (fifoCount < packetSize) {
-//          Serial.println("gettingFifoCount2");
           fifoCount = mpu.getFIFOCount();
         }
-//        Serial.println("gettingFifoBytes");
         mpu.getFIFOBytes(fifoBuffer, packetSize);
         
         fifoCount -= packetSize;
@@ -154,17 +149,11 @@ void loop() {
         dtostrf(ypr[0] * 180/M_PI, 7, 3, floatBuffer1);
         dtostrf(ypr[1] * 180/M_PI, 7, 3, floatBuffer2);
         dtostrf(ypr[2] * 180/M_PI, 7, 3, floatBuffer3);
-//        Serial.print(ypr[0] * 180/M_PI);
-//        Serial.print("\t");
-//        Serial.print(ypr[1] * 180/M_PI);
-//        Serial.print("\t");
-//        Serial.println(ypr[2] * 180/M_PI);
-//         sprintf(out," X=%d Y=%d Z=%d \t t=%d f=%d \n",sv1, sv2, sv3, fp1, fp2);
-        sprintf(out,"s%s %s %s %d %d %df",floatBuffer1,floatBuffer2,floatBuffer3,sv1,sv2,sv3);
+        sprintf(out,"s%s %s %s %d %d %d %d %df",floatBuffer1,floatBuffer2,floatBuffer3,sv1,sv2,sv3,-vx,-vy);
         Serial.print(out);
         Serial1.write(out,64);
     }
-    delay(100);
+    delay(20);
 }
 
 

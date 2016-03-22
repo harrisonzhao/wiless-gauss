@@ -15,7 +15,7 @@ public class Main {
         serialRead.openAndSetSerialPort("/dev/rfcomm0");
 
 
-        int f1,f2,f3,leftCount=0,rightCount=0;
+        int f1,f2,f3,leftCount=0,rightCount=0, vx,vy;
         double x,y,z;
         String n;
         String [] vals = null;
@@ -33,16 +33,21 @@ public class Main {
                         newVals.add(v);
                     }
                 }
-                System.out.println("val: "+newVals.get(0)+" "+newVals.get(1)+" "+newVals.get(2));
+                System.out.println("val: "+newVals.get(0)+" "+newVals.get(1)+" "+newVals.get(2)+" "+newVals.get(3)+" "+newVals.get(4)+" "+newVals.get(5));
                 f1 = Integer.parseInt(newVals.get(4));
                 f2 = Integer.parseInt(newVals.get(3));
                 f3 = Integer.parseInt(newVals.get(5));
                 x = Float.parseFloat(newVals.get(0));
                 y = Float.parseFloat(newVals.get(1));
                 z = Float.parseFloat(newVals.get(2));
+                vx = Integer.parseInt(newVals.get(6));
+                vy = Integer.parseInt(newVals.get(7));
+
                 newVals.clear();
-                if(f1<50){
-                    mouseCtrl.moveAtAngleWithVel(x, y, -z);
+                if(f1>750){
+                    System.out.println("moving");
+//                    mouseCtrl.moveAtAngleWithVel(x, y, -z);
+                    mouseCtrl.moveMousePosition(vx,vy);
                     //3rd to decide axis of mouse movement
                     //2nd to be more important when gyro angles are 0 or +-180
                     //1st to be more important when gyro angles are 90 ot -90

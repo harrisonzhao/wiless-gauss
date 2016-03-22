@@ -45,9 +45,15 @@ public class MouseCtrl {
 
 
         System.out.println("old: "+x+" "+y);
-        y = (int)((double)y - (5*Math.cos(angle*3.14/180)));
-        x = (int)((double)x + (5*Math.sin(angle*3.14/180)));
+        y = (int)((double)y - (Math.cos(angle*3.14/180)));
+        x = (int)((double)x + (Math.sin(angle*3.14/180)));
         System.out.println("new: "+x+" "+y);
+        robot.mouseMove(x,y);
+    }
+
+    public void moveMousePosition(int vx, int vy){
+        y = y + angleToDistance(vy);
+        x = x + angleToDistance(vx);
         robot.mouseMove(x,y);
     }
 
@@ -66,6 +72,39 @@ public class MouseCtrl {
     public void leftClick(){
         robot.mousePress(InputEvent.BUTTON2_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);
+    }
+
+    private int angleToDistance(int a) {
+        if (a < -80) {
+            return -40;
+        }
+        else if (a < -65) {
+            return -20;
+        }
+        else if (a < -50) {
+            return -10;
+        }
+        else if (a < -15) {
+            return -5;
+        }
+        else if (a < -5) {
+            return -1;
+        }
+        else if (a > 80) {
+            return 40;
+        }
+        else if (a > 65) {
+            return 20;
+        }
+        else if (a > 15) {
+            return 10;
+        }
+        else if (a > 5) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 
 }
