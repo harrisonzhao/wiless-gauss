@@ -31,9 +31,12 @@ public class Main {
                 for(String v: vals){
                     if(v.length()>0){
                         newVals.add(v);
+                        System.out.print(v);
                     }
                 }
-                System.out.println("val: "+newVals.get(0)+" "+newVals.get(1)+" "+newVals.get(2)+" "+newVals.get(3)+" "+newVals.get(4)+" "+newVals.get(5));
+                System.out.println();
+//                System.out.println("val: "+newVals.get(0)+" "+newVals.get(1)+" "+newVals.get(2)+" "+newVals.get(3)+" "+newVals.get(4)+" "+newVals.get(5)
+//                +" "+newVals.get(6)+" "+newVals.get(7));
                 f1 = Integer.parseInt(newVals.get(4));
                 f2 = Integer.parseInt(newVals.get(3));
                 f3 = Integer.parseInt(newVals.get(5));
@@ -44,15 +47,14 @@ public class Main {
                 vy = Integer.parseInt(newVals.get(7));
 
                 newVals.clear();
-                if(f1>750){
-                    System.out.println("moving");
+//                if(f1>750){
 //                    mouseCtrl.moveAtAngleWithVel(x, y, -z);
                     mouseCtrl.moveMousePosition(vx,vy);
                     //3rd to decide axis of mouse movement
                     //2nd to be more important when gyro angles are 0 or +-180
                     //1st to be more important when gyro angles are 90 ot -90
                     //control mouse
-                }
+//                }
                 if(f2<50){
                     if(leftCount>10){
                         mouseCtrl.leftClick();
@@ -74,6 +76,7 @@ public class Main {
 
             }
             catch (Exception e){
+                e.printStackTrace();
                 newVals.clear();
             }
         }

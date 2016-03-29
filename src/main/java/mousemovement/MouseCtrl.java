@@ -54,6 +54,19 @@ public class MouseCtrl {
     public void moveMousePosition(int vx, int vy){
         y = y + angleToDistance(vy);
         x = x + angleToDistance(vx);
+        if(x>1919){
+            x=1919;
+        }
+        else if(x<0){
+            x=0;
+        }
+        if(y>1079){
+            y=1079;
+        }
+        else if(y<0){
+            y=0;
+        }
+        System.out.println(x+" "+y);
         robot.mouseMove(x,y);
     }
 
